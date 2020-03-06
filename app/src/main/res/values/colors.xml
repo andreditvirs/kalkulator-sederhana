@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F1DEDC</color>
+    <color name="colorPrimaryDark">#D7837F</color>
+    <color name="colorAccent">#1A2020</color>
+    <color name="pink_light">#F1DEDC</color>
+    <color name="pink">#D7837F</color>
+    <color name="brown">#1A2020</color>
+    <color name="white">#EDF2F0</color>
+</resources>
