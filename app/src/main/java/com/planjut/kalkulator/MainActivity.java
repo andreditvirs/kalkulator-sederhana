@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 tvInput.setText("");
                 tvOutput.setText("");
+                checkBracket=false;
             }
         });
 
@@ -139,11 +140,18 @@ public class MainActivity extends AppCompatActivity {
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkOperator()){
+                if(inputIsEmpty()){
                     // do nothing
-                }else{
-                    process = tvInput.getText().toString();
-                    tvInput.setText(process + "+");
+                }else {
+                    if(!checkOperator()){
+                        if(defaultDot()){
+                            process = tvInput.getText().toString();
+                            tvInput.setText(process + "+");
+                        }else{
+                            process = tvInput.getText().toString();
+                            tvInput.setText(process + "+");
+                        }
+                    }
                 }
                 
             }
@@ -152,11 +160,18 @@ public class MainActivity extends AppCompatActivity {
         btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkOperator()){
+                if(inputIsEmpty()){
                     // do nothing
                 }else {
-                    process = tvInput.getText().toString();
-                    tvInput.setText(process + "-");
+                    if(!checkOperator()){
+                        if(defaultDot()){
+                            process = tvInput.getText().toString();
+                            tvInput.setText(process + "-");
+                        }else{
+                            process = tvInput.getText().toString();
+                            tvInput.setText(process + "-");
+                        }
+                    }
                 }
             }
         });
@@ -164,11 +179,18 @@ public class MainActivity extends AppCompatActivity {
         btnMultiply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkOperator()){
+                if(inputIsEmpty()){
                     // do nothing
                 }else {
-                    process = tvInput.getText().toString();
-                    tvInput.setText(process + "×");
+                    if(!checkOperator()){
+                        if(defaultDot()){
+                            process = tvInput.getText().toString();
+                            tvInput.setText(process + "×");
+                        }else{
+                            process = tvInput.getText().toString();
+                            tvInput.setText(process + "×");
+                        }
+                    }
                 }
             }
         });
@@ -176,11 +198,18 @@ public class MainActivity extends AppCompatActivity {
         btnDivision.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkOperator()){
+                if(inputIsEmpty()){
                     // do nothing
                 }else {
-                    process = tvInput.getText().toString();
-                    tvInput.setText(process + "÷");
+                    if(!checkOperator()){
+                        if(defaultDot()){
+                            process = tvInput.getText().toString();
+                            tvInput.setText(process + "÷");
+                        }else{
+                            process = tvInput.getText().toString();
+                            tvInput.setText(process + "÷");
+                        }
+                    }
                 }
             }
         });
@@ -190,28 +219,24 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 process = tvInput.getText().toString();
 
-                if(checkOperator()){
-                    // do nothing
-                }else{
-                    if(process.equals("")) {
+                if(inputIsEmpty()){
                         tvInput.setText(process + "0.");
-                    }else{
-                        int i = process.length()-1;
-                        while(i > -1){
-                            if(process.charAt(i) == '+' || process.charAt(i) == '-' || process.charAt(i) == '×' || process.charAt(i) == '÷' ){
+                }else{
+                    int i = process.length()-1;
+                    while(i > -1 && !checkOperator()){
+                        if(process.charAt(i) == '+' || process.charAt(i) == '-' || process.charAt(i) == '×' || process.charAt(i) == '÷' ){
                                 // jika ada operator sebelumny maka boleh menulis titik
-                                tvInput.setText(process + ".");
-                                break;
-                            }else if(process.charAt(i) == '.'){
-                                // jika ada '.' maka langsung tolak/break
-                                break;
-                            }else if (i == 0){
-                                // jika tidak ada . dan sudah habis dicek semua maka tulis saja .
-                                tvInput.setText(process + ".");
-                                break;
-                            }
-                            i--;
+                            tvInput.setText(process + ".");
+                            break;
+                        }else if(process.charAt(i) == '.'){
+                            // jika ada '.' maka langsung tolak/break
+                            break;
+                        }else if (i == 0){
+                            // jika tidak ada . dan sudah habis dicek semua maka tulis saja .
+                            tvInput.setText(process + ".");
+                            break;
                         }
+                        i--;
                     }
                 }
             }
@@ -220,23 +245,18 @@ public class MainActivity extends AppCompatActivity {
         btnPercent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkOperator()){
+                if(inputIsEmpty()){
                     // do nothing
                 }else {
-                    process = tvInput.getText().toString();
-                    tvInput.setText(process + "%");
-                }
-            }
-        });
-
-        btnDivision.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(checkOperator()){
-                    // do nothing
-                }else {
-                    process = tvInput.getText().toString();
-                    tvInput.setText(process + "÷");
+                    if(!checkOperator()){
+                        if(defaultDot()){
+                            process = tvInput.getText().toString();
+                            tvInput.setText(process + "%");
+                        }else{
+                            process = tvInput.getText().toString();
+                            tvInput.setText(process + "%");
+                        }
+                    }
                 }
             }
         });
@@ -244,13 +264,12 @@ public class MainActivity extends AppCompatActivity {
         btnBracket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                process = tvInput.getText().toString();
                 if(checkBracket){
-                    process = tvInput.getText().toString();
-                    tvInput.setText(process + "(");
+                    tvInput.setText(process + ")");
                     checkBracket = false;
                 }else{
-                    process = tvInput.getText().toString();
-                    tvInput.setText(process + ")");
+                    tvInput.setText(process + "(");
                     checkBracket = true;
                 }
                 
@@ -260,34 +279,62 @@ public class MainActivity extends AppCompatActivity {
         btnEqual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process = tvInput.getText().toString();
-                process = process.replaceAll("×", "*");
-                process = process.replaceAll("%", "/100");
-                process = process.replaceAll("÷", "/");
+                if(inputIsEmpty()){
+                    // do nothing
+                }else {
+                    process = tvInput.getText().toString();
+                    process = process.replaceAll("×", "*");
+                    process = process.replaceAll("%", "/100");
+                    process = process.replaceAll("÷", "/");
 
-                Context rhino = org.mozilla.javascript.Context.enter();
+                    Context rhino = org.mozilla.javascript.Context.enter();
 
-                rhino.setOptimizationLevel(-1);
-                String finalResult = "";
-                boolean isEmpty = true;
+                    rhino.setOptimizationLevel(-1);
+                    String finalResult = "";
+                    boolean isEmpty = true;
 
-                try{
-                    Scriptable scriptable = rhino.initSafeStandardObjects();
-                    finalResult = rhino.evaluateString(scriptable, process, "javascript", 1, null).toString();
-                }catch (Exception e){
-                    finalResult = "Error";
+                    try {
+                        Scriptable scriptable = rhino.initSafeStandardObjects();
+                        finalResult = rhino.evaluateString(scriptable, process, "javascript", 1, null).toString();
+                    } catch (Exception e) {
+                        finalResult = "Error";
+                    }
+
+                    tvOutput.setText(finalResult);
                 }
-
-                tvOutput.setText(finalResult);
-
             }
         });
     }
+
+    private boolean inputIsEmpty(){
+        process = tvInput.getText().toString();
+        try{
+            int i = process.length();
+            if(i == 0){
+                return true;
+            }
+        }catch (NullPointerException e){
+            System.out.println(e);
+        }
+        return false;
+    }
+
         private boolean checkOperator(){
+            process = tvInput.getText().toString();
             int i = process.length()-1;
             switch (process.charAt(i)){
-                case '+' : case '-' : case '×' : case '÷' : case '%' : /*do nothing */ return true;
+                case '+' : case '-' : case '×' : case '÷' : case '%' : case '(':  /*do nothing */ return true;
                 default : return false;
             }
+        }
+
+        private boolean defaultDot(){
+            process = tvInput.getText().toString();
+            int i = process.length()-1;
+            if(process.charAt(i) == '.'){
+                tvInput.setText(process + "0");
+                return true;
+            }
+            return false;
         }
     }
